@@ -13,4 +13,5 @@ LazyData: true
 RoxygenNote: 6.1.0
 Suggests: 
     testthat,
-    quantmod
+    quantmod,
+    dplyr
