@@ -15,3 +15,5 @@ Suggests:
     testthat,
     quantmod,
     dplyr
+Imports: 
+    data.table
