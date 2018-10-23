@@ -14,7 +14,8 @@ RoxygenNote: 6.1.0
 Suggests: 
     testthat,
     quantmod,
-    dplyr
+    dplyr,
+    readr
 Imports: 
     data.table
 Depends:
