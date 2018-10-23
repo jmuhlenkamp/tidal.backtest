@@ -2,7 +2,7 @@
 % Please edit documentation in R/fedfunds_functions.R
 \name{convert_rate_g}
 \alias{convert_rate_g}
-\title{Unexported function(s) used to munge fedfunds and related data}
+\title{Unexported function(s) to munge fedfunds and related data}
 \usage{
 convert_rate_g(df)
 }
@@ -10,5 +10,5 @@ convert_rate_g(df)
 \item{df}{data.frame containing columns: symbol, date, rate (annualized, e.g. 2.25).}
 }
 \description{
-Functions used to change fedfunds style data into price style data.
+Changes fedfunds style data into price style data.
 }

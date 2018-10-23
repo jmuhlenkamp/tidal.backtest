@@ -2,7 +2,7 @@
 % Please edit documentation in R/fedfunds_functions.R
 \name{convert_g_price}
 \alias{convert_g_price}
-\title{Unexported function(s) used to munge fedfunds and related data}
+\title{Unexported function(s) to munge fedfunds and related data}
 \usage{
 convert_g_price(df)
 }
@@ -10,5 +10,5 @@ convert_g_price(df)
 \item{df}{data.frame containing columns: symbol, date, g (daily growth, e.g. 0.01 = 1 percent).}
 }
 \description{
-Functions used to change fedfunds growth data into price style data.
+Changes fedfunds growth data into price style data.
 }
