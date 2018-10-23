@@ -27,7 +27,7 @@ getSymbols("DFEDTARU", src = "FRED")
 DFEDTARU <- DFEDTARU["20171023/20181022"]
 fedfunds <- data.frame(symbol = "_FEDFUNDS_",
                        date = index(DFEDTARU),
-                       price = unname(DFEDTARU),
+                       rate = unname(DFEDTARU),
                        stringsAsFactors = FALSE)
 }
 
