@@ -41,3 +41,24 @@ convert_fedfunds_broker <- function(df, new_symbol, add_rate) {
                                           rate=ifelse(rate+add_rate < 0, 0,
                                                       rate+add_rate))])
 }
+#'
+#' Unexported function(s) to munge fedfunds and related data
+#'
+#' Takes a benchmark interest rate like fedfunds and return broker style
+#' cash assets with symbols "_CASH_LONG_" and "_CASH_SHORT_" in the format
+#' that trade_weights() requires.
+#'
+#' @param df data.frame containing columns: symbol, date, rate (annualized, e.g. 2.25).
+#' @param add_rate_long Annualized rate to add to input rate to create annualized rate
+#'                      paid on cash balances(e.g. -0.50 = -25 basis points).
+#' @param add_rate_short Annualized rate to add to input rate to create annualized rate
+#'                       charge on margin balances(e.g. 0.25 = +25 basis points).
+#'
+create_cash_assets <- function(df, add_rate_long = -0.50, add_rate_short = 0.25) {
+    rbind(
+        convert_g_price(convert_rate_g(
+            convert_fedfunds_broker(df, "_CASH_LONG_", add_rate_long))),
+        convert_g_price(convert_rate_g(
+            convert_fedfunds_broker(df, "_CASH_SHORT_", add_rate_short)))
+    )
+}

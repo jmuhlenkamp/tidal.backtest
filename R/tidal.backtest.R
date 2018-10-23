@@ -25,5 +25,7 @@ utils::globalVariables(c(".",
                          "time",
                          "tmp",
                          "trade_dollars",
-                         "trade_shares"
+                         "trade_shares",
+                         "rate",
+                         "g"
                          ))
