@@ -20,8 +20,8 @@ trade_weights_initialize <- function(df_prices, df_weights) {
 
     # Convert input df to dt
     # Exclude extraneous data
-    dt_prices <- as.data.table(as.data.frame(df_prices))
-    dt_weights <- as.data.table(as.data.frame(df_weights))
+    dt_prices <- as.data.table(as.data.frame(df_prices))[,.(symbol, date, price)]
+    dt_weights <- as.data.table(as.data.frame(df_weights))[,.(symbol, date, w)]
     dt_prices <- dt_prices[symbol %in% symbols & date >= min_date]
 
     # Add is_cash column
