@@ -1,12 +1,12 @@
 Package: tidal.backtest
-Title: What the Package Does (One Line, Title Case)
+Title: Function(s) for Fund Level Backtesting
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jason",
+           family = "Muhlenkamp",
            role = c("aut", "cre"),
-           email = "first.last@example.com")
-Description: What the package does (one paragraph).
+           email = "jason.muhlenkamp@gmail.com")
+Description: Generate daily NAV backtest results quickly and easily.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

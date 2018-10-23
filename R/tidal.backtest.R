@@ -1,6 +1,6 @@
 #' tidal.backtest: Function(s) for Fund Level Backtesting
 #'
-#' Generate daily NAV backtest results quickly and easily
+#' Generate daily NAV backtest results quickly and easily.
 #'
 #' @docType package
 #' @name tidal.backtest

@@ -6,9 +6,9 @@
 \alias{tidal.backtest-package}
 \title{tidal.backtest: Function(s) for Fund Level Backtesting}
 \description{
-Generate daily NAV backtest results quickly and easily
+Generate daily NAV backtest results quickly and easily.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com}
+\strong{Maintainer}: Jason Muhlenkamp \email{jason.muhlenkamp@gmail.com}
 
 }
