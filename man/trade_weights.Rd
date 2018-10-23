@@ -16,6 +16,7 @@ Takes a set of daily prices and daily weights
 and returns a daily NAV
 }
 \examples{
+\dontrun{
 library(quantmod)
 
 # Create a data.frame of adjusted close prices
@@ -35,4 +36,5 @@ df_weights$price <- NULL
 
 # Trade the weights
 df_nav <- trade_weights(df_close, df_weights)
+}
 }

@@ -8,6 +8,7 @@
 #' @import data.table
 #' @export
 #' @examples
+#' \dontrun{
 #' library(quantmod)
 #'
 #' # Create a data.frame of adjusted close prices
@@ -27,6 +28,7 @@
 #'
 #' # Trade the weights
 #' df_nav <- trade_weights(df_close, df_weights)
+#' }
 
 trade_weights <- function(df_prices, df_weights) {
     list_initialized <- trade_weights_initialize(df_prices, df_weights)
