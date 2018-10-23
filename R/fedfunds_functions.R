@@ -34,12 +34,13 @@ convert_g_price <- function(df) {
 #'
 #' @param df data.frame containing columns: symbol, date, rate (annualized, e.g. 2.25).
 #' @param new_symbol character string to use as symbol column on returned data.frame.
+#' @param multiplier -1 or 1 depending on whether short or long rate.
 #' @param add_rate Annualized rate to add to input rate (e.g. 0.25 = +25 basis points).
 #'
-convert_fedfunds_broker <- function(df, new_symbol, add_rate) {
+convert_fedfunds_broker <- function(df, new_symbol, multiplier, add_rate) {
     as.data.frame(as.data.table(df)[,`:=`(symbol=new_symbol,
-                                          rate=ifelse(rate+add_rate < 0, 0,
-                                                      rate+add_rate))])
+                                          rate=multiplier*ifelse(rate+add_rate < 0, 0,
+                                                                 rate+add_rate))])
 }
 #'
 #' Unexported function(s) to munge fedfunds and related data
@@ -57,8 +58,8 @@ convert_fedfunds_broker <- function(df, new_symbol, add_rate) {
 create_cash_assets <- function(df, add_rate_long = -0.50, add_rate_short = 0.25) {
     rbind(
         convert_g_price(convert_rate_g(
-            convert_fedfunds_broker(df, "_CASH_LONG_", add_rate_long))),
+            convert_fedfunds_broker(df, "_CASH_LONG_", 1, add_rate_long))),
         convert_g_price(convert_rate_g(
-            convert_fedfunds_broker(df, "_CASH_SHORT_", add_rate_short)))
+            convert_fedfunds_broker(df, "_CASH_SHORT_", -1, add_rate_short)))
     )
 }

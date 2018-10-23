@@ -4,12 +4,14 @@
 \alias{convert_fedfunds_broker}
 \title{Unexported function(s) to munge fedfunds and related data}
 \usage{
-convert_fedfunds_broker(df, new_symbol, add_rate)
+convert_fedfunds_broker(df, new_symbol, multiplier, add_rate)
 }
 \arguments{
 \item{df}{data.frame containing columns: symbol, date, rate (annualized, e.g. 2.25).}
 
 \item{new_symbol}{character string to use as symbol column on returned data.frame.}
+
+\item{multiplier}{-1 or 1 depending on whether short or long rate.}
 
 \item{add_rate}{Annualized rate to add to input rate (e.g. 0.25 = +25 basis points).}
 }

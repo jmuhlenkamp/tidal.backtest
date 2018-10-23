@@ -1,7 +1,14 @@
 context("Test fedfunds Functions")
 
-test_that("convert_fedfunds_broker() does not return negative rate", {
-    expect_identical(min(convert_fedfunds_broker(fedfunds, "_CASH_LONG_", -9.00)$rate) >= 0,
+test_that("create_cash_assets() runs within an error", {
+    expect_identical(nrow(create_cash_assets(fedfunds)),
+                     as.integer(730))
+})
+
+test_that("convert_fedfunds_broker() does not return borrowing > 0 or earning < 0", {
+    expect_identical(min(convert_fedfunds_broker(fedfunds, "_CASH_LONG_", 1, -9.00)$rate) >= 0,
+                     TRUE)
+    expect_identical(min(convert_fedfunds_broker(fedfunds, "_CASH_SHORT_", -1, +9.00)$rate) <= 0,
                      TRUE)
 })
 
