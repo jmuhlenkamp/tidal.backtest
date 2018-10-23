@@ -2,7 +2,7 @@
 % Please edit documentation in R/trade_weights_subfunctions.R
 \name{trade_weights_initialize}
 \alias{trade_weights_initialize}
-\title{Unexported Subfunction of trade_weights}
+\title{Unexported Subfunction(s) of trade_weights}
 \usage{
 trade_weights_initialize(df_prices, df_weights)
 }
@@ -13,5 +13,5 @@ trade_weights_initialize(df_prices, df_weights)
 }
 \description{
 Takes a set of daily prices and daily weights
-and returns a list of initialized data ready to be traded
+and returns a list of initialized data ready to be traded.
 }

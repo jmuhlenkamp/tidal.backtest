@@ -29,5 +29,7 @@
 #' df_nav <- trade_weights(df_close, df_weights)
 
 trade_weights <- function(df_prices, df_weights) {
-    trade_weights_initialize(df_prices, df_weights)
+    list_initialized <- trade_weights_initialize(df_prices, df_weights)
+    list_executed <- trade_weights_execute(list_initialized)
+    return(list_executed$df_fund)
 }
