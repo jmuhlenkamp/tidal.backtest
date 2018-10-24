@@ -14,6 +14,8 @@ trade_weights_update_nav <- function(dt_fund, dt, idate) {
         nav_trade=sum(dt[date == idate, .(tmp=shares_trade * price_trade)][,tmp]),
         nav_close=sum(dt[date == idate, .(tmp=shares_close * price_close)][,tmp])
     )]
+    #print(dt_fund[date == idate,])
+    #print(dt[date == idate,])
 }
 #'
 #' Unexported Subfunction(s) of trade_weights
@@ -49,8 +51,9 @@ trade_weights_execute <- function(list_data) {
         net_purchases <- dt[is_cash==FALSE & date == idate, sum(trade_shares * price_trade)]
         cash_long <- dt[symbol == '_CASH_LONG_' & date == idate, shares_value * price_trade]
         cash_short <- dt[symbol == '_CASH_SHORT_' & date == idate, shares_value * price_trade]
-        updated_cash_long <- max(c(0, cash_long - net_purchases))
-        updated_cash_short <- -1 * min(c(0, cash_long - net_purchases))
+        net_cash <- cash_long + cash_short
+        updated_cash_long <- max(c(0, net_cash - net_purchases))
+        updated_cash_short <- min(c(0, net_cash - net_purchases))
 
         # Handle shares
         dt[symbol == '_CASH_LONG_' & date == idate, target_dollars:=updated_cash_long]

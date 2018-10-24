@@ -60,6 +60,6 @@ create_cash_assets <- function(df, add_rate_long = -0.50, add_rate_short = 0.25)
         convert_g_price(convert_rate_g(
             convert_fedfunds_broker(df, "_CASH_LONG_", 1, add_rate_long))),
         convert_g_price(convert_rate_g(
-            convert_fedfunds_broker(df, "_CASH_SHORT_", -1, add_rate_short)))
+            convert_fedfunds_broker(df, "_CASH_SHORT_", 1, add_rate_short)))
     )
 }
