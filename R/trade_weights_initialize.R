@@ -5,16 +5,19 @@
 #'
 #' @param df_prices a data.frame containing the columns: symbol, date, price
 #' @param df_weights a data.frame containing the columns: symbol, date, w
+#' @param use_cash_long if TRUE use _CASH_LONG_ price within df_prices, else use 1 for all dates
+#' @param use_cash_short if TRUE use _CASH_SHORT_ price within df_prices, else use 1 for all dates
 #' @import data.table
 #'
-trade_weights_initialize <- function(df_prices, df_weights) {
+trade_weights_initialize <- function(df_prices, df_weights,
+                                     use_cash_long, use_cash_short) {
     validate_df_columns(df_prices, c("symbol", "date", "price"))
     validate_df_columns(df_weights, c("symbol", "date", "w"))
 
     # Initialize various objects
     initial_fund_value <- 1000000
     symbols <- sort(unique(df_weights$symbol))
-    dates <- sort(unique(df_prices$date))
+    dates <- sort(unique(df_prices[df_prices$symbol == 'XLB', 'date']))
     dates <- dates[dates >= min(df_weights$date)]
     min_date <- dates[1]
 
@@ -24,22 +27,32 @@ trade_weights_initialize <- function(df_prices, df_weights) {
     dt_weights <- as.data.table(as.data.frame(df_weights))[,.(symbol, date, w)]
     dt_prices <- dt_prices[symbol %in% symbols & date >= min_date]
 
-    # Add is_cash column
-    # Add rows to include _CASH_LONG_ and _CASH_SHORT_ for all dates
+    # Handle cash price series by either using 1.0 for all dates or
+    # _CASH_LONG_ and/or _CASH_SHORT_ within df_prices input
     dt_prices[, is_cash:=FALSE]
-    dt <- rbind(dt_prices,
-                data.table(symbol = '_CASH_LONG_',
-                           date = dates,
-                           price = 1.0,
-                           is_cash = TRUE),
-                data.table(symbol = '_CASH_SHORT_',
-                           date = dates,
-                           price = 1.0,
-                           is_cash = TRUE))[
-                               ,time:=character(.N)]
+    dt <- dt_prices
+    if (use_cash_long) {
+        dt[symbol == "_CASH_LONG_", is_cash:=TRUE]
+    } else {
+        dt <- rbind(dt,
+                    data.table(symbol = '_CASH_LONG_',
+                               date = dates,
+                               price = 1.0,
+                               is_cash = TRUE))
+    }
+    if (use_cash_short) {
+        dt[symbol == "_CASH_SHORT_", is_cash:=TRUE]
+    } else {
+        dt <- rbind(dt,
+                    data.table(symbol = '_CASH_SHORT_',
+                               date = dates,
+                               price = 1.0,
+                               is_cash = TRUE))
+    }
 
     # Multiply rows by 3 for value, trade and close times of days
     # Placeholder for more input price times used in future
+    dt[,time:=character(.N)]
     dt <- rbind(dt, dt, dt)
     dt[, time:=c(rep('value',.N/3),rep('trade',.N/3),rep('close',.N/3))]
     dt[, `:=`(shares=numeric(.N))]

@@ -4,12 +4,17 @@
 \alias{trade_weights_initialize}
 \title{Unexported Subfunction(s) of trade_weights}
 \usage{
-trade_weights_initialize(df_prices, df_weights)
+trade_weights_initialize(df_prices, df_weights, use_cash_long,
+  use_cash_short)
 }
 \arguments{
 \item{df_prices}{a data.frame containing the columns: symbol, date, price}
 
 \item{df_weights}{a data.frame containing the columns: symbol, date, w}
+
+\item{use_cash_long}{if TRUE use _CASH_LONG_ price within df_prices, else use 1 for all dates}
+
+\item{use_cash_short}{if TRUE use _CASH_SHORT_ price within df_prices, else use 1 for all dates}
 }
 \description{
 Takes a set of daily prices and daily weights

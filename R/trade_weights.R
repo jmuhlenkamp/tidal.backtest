@@ -31,7 +31,13 @@
 #' }
 
 trade_weights <- function(df_prices, df_weights) {
-    list_initialized <- trade_weights_initialize(df_prices, df_weights)
+    has_cash_long <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_LONG_",]))
+    has_cash_short <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_SHORT_",]))
+
+    list_initialized <- trade_weights_initialize(
+        df_prices, df_weights, has_cash_long, has_cash_short)
+
     list_executed <- trade_weights_execute(list_initialized)
+
     return(list_executed$df_fund)
 }
