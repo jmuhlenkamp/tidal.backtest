@@ -17,14 +17,17 @@ trade_weights_initialize <- function(df_prices, df_weights,
     # Initialize various objects
     initial_fund_value <- 1000000
     symbols <- sort(unique(df_weights$symbol))
+    if (use_cash_long) { symbols <- c(symbols, "_CASH_LONG_") }
+    if (use_cash_short) { symbols <- c(symbols, "_CASH_SHORT_") }
+    symbols <- sort(unique(symbols))
     dates <- sort(unique(df_prices[df_prices$symbol == 'XLB', 'date']))
     dates <- dates[dates >= min(df_weights$date)]
     min_date <- dates[1]
 
     # Convert input df to dt
     # Exclude extraneous data
-    dt_prices <- as.data.table(as.data.frame(df_prices))[,.(symbol, date, price)]
-    dt_weights <- as.data.table(as.data.frame(df_weights))[,.(symbol, date, w)]
+    dt_prices <- as.data.table(as.data.frame(df_prices))[date %in% dates,.(symbol, date, price)]
+    dt_weights <- as.data.table(as.data.frame(df_weights))[date %in% dates,.(symbol, date, w)]
     dt_prices <- dt_prices[symbol %in% symbols & date >= min_date]
 
     # Handle cash price series by either using 1.0 for all dates or
