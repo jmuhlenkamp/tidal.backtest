@@ -42,24 +42,30 @@ trade_weights_execute <- function(list_data) {
         trade_weights_update_nav(dt_fund, dt, idate)
         fv <- dt_fund[date == idate, nav_value]
 
-        # Update non-cash trade_shares
-        dt[is_cash==FALSE & date == idate, target_dollars:=w * fv]
-        dt[is_cash==FALSE & date == idate, trade_dollars:=target_dollars - shares_value * price_value]
-        dt[is_cash==FALSE & date == idate, trade_shares:=trade_dollars / price_value]
+        rebal <- TRUE # Currently only daily rebal is supported
+        if (rebal) {
+            # Update non-cash trade_shares
+            dt[is_cash==FALSE & date == idate, target_dollars:=w * fv]
+            dt[is_cash==FALSE & date == idate, trade_dollars:=target_dollars - shares_value * price_value]
+            dt[is_cash==FALSE & date == idate, trade_shares:=trade_dollars / price_value]
 
-        # Determine cash changes in dollars (will later handle shares)
-        net_purchases <- dt[is_cash==FALSE & date == idate, sum(trade_shares * price_trade)]
-        cash_long <- dt[symbol == '_CASH_LONG_' & date == idate, shares_value * price_trade]
-        cash_short <- dt[symbol == '_CASH_SHORT_' & date == idate, shares_value * price_trade]
-        net_cash <- cash_long + cash_short
-        updated_cash_long <- max(c(0, net_cash - net_purchases))
-        updated_cash_short <- min(c(0, net_cash - net_purchases))
+            # Determine cash changes in dollars (will later handle shares)
+            net_purchases <- dt[is_cash==FALSE & date == idate, sum(trade_shares * price_trade)]
+            cash_long <- dt[symbol == '_CASH_LONG_' & date == idate, shares_value * price_trade]
+            cash_short <- dt[symbol == '_CASH_SHORT_' & date == idate, shares_value * price_trade]
+            net_cash <- cash_long + cash_short
+            updated_cash_long <- max(c(0, net_cash - net_purchases))
+            updated_cash_short <- min(c(0, net_cash - net_purchases))
 
-        # Handle shares
-        dt[symbol == '_CASH_LONG_' & date == idate, target_dollars:=updated_cash_long]
-        dt[symbol == '_CASH_SHORT_' & date == idate, target_dollars:=updated_cash_short]
-        dt[is_cash==TRUE & date == idate, trade_dollars:=target_dollars - shares_value * price_value]
-        dt[is_cash==TRUE & date == idate, trade_shares:=trade_dollars / price_value]
+            # Handle shares
+            dt[symbol == '_CASH_LONG_' & date == idate, target_dollars:=updated_cash_long]
+            dt[symbol == '_CASH_SHORT_' & date == idate, target_dollars:=updated_cash_short]
+            dt[is_cash==TRUE & date == idate, trade_dollars:=target_dollars - shares_value * price_value]
+            dt[is_cash==TRUE & date == idate, trade_shares:=trade_dollars / price_value]
+        } else {
+            stop("Currently only daily rebal is supported.  This code should not run.")
+            dt[date == idate, trade_shares := 0]
+        }
 
         # Trade shares
         dt[date == idate, shares_trade:=shares_value + trade_shares]
