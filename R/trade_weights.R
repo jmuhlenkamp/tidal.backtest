@@ -45,6 +45,22 @@ trade_weights <- function(df_prices, df_weights, rebal_group_by = "date", rebal_
     }
     has_cash_long <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_LONG_",]))
     has_cash_short <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_SHORT_",]))
+    if (has_cash_long) {
+        msg_cash_long <- "Broker charged rates within price data"
+    } else {
+        msg_cash_long <- "None (i.e. 0%)"
+    }
+    if (has_cash_short) {
+        msg_cash_short <- "Broker charged rates within price data"
+    } else {
+        msg_cash_short <- "None (i.e. 0%)"
+    }
+
+    message("Assumptions Used for Backtest...") # eventually stick this in output list
+    message("Cash Interest Earned   : ", msg_cash_long)
+    message("Margin Interest Charged: ", msg_cash_short)
+    message("Rebalance              : Day ", rebal_ith, " of each ", rebal_group_by)
+    message("Trade Costs            : None")
 
     list_initialized <- trade_weights_initialize(
         df_prices, df_weights, has_cash_long, has_cash_short)
