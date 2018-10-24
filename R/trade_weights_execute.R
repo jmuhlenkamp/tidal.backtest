@@ -64,7 +64,6 @@ trade_weights_execute <- function(list_data) {
             dt[is_cash==TRUE & date == idate, trade_dollars:=target_dollars - shares_value * price_value]
             dt[is_cash==TRUE & date == idate, trade_shares:=trade_dollars / price_value]
         } else {
-            stop("Currently only daily rebal is supported.  This code should not run.")
             dt[date == idate, trade_shares := 0]
         }
 
@@ -75,7 +74,12 @@ trade_weights_execute <- function(list_data) {
 
         lag_idate <- idate
         first <- FALSE
+
+        #if (idate <= as.Date("2017-10-24")) print(dt_fund[date == idate])
+        #if (idate >= as.Date("2017-12-29")) print(dt_fund[date == idate])
+        #if (idate <= as.Date("2017-10-24")) print(dt[date == idate])
     }
+
     # Prepare data for returning to user
     dt_fund <- dt_fund[,.(date, nav_close)]
     setnames(dt_fund, old='nav_close', new='nav')

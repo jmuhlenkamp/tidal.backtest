@@ -5,13 +5,13 @@
 #'
 #' @param df_prices a data.frame containing the columns: symbol, date, price
 #' @param df_weights a data.frame containing the columns: symbol, date, w
+#' @param rebal_group_by Optional Character indicating by group to apply to ith_date.
+#'                       Acceptable values are: date, week, month, qtr.  Default is date
+#'                       which performs a daily rebalance.
 #' @param rebal_ith Optional Integer to determine which observation of each by group to return.
 #'                 For Example ith_date = 2, week will return the second day of
 #'                 each week.  Also, ith_date = 99, month will return last day of
 #'                 each month.  Default is 1.
-#' @param rebal_group_by Optional Character indicating by group to apply to ith_date.
-#'                       Acceptable values are: date, week, month, qtr.  Default is date
-#'                       which performs a daily rebalance.
 #'
 #' @import data.table
 #' @export
@@ -38,7 +38,11 @@
 #' df_nav <- trade_weights(df_close, df_weights)
 #' }
 
-trade_weights <- function(df_prices, df_weights, rebal_ith = 1, rebal_group_by = "date") {
+trade_weights <- function(df_prices, df_weights, rebal_group_by = "date", rebal_ith = 1) {
+    rebal_ith_date <- 1
+    if (rebal_ith_date != 1) {
+        stop("Only rebal_ith_date = 1 is currently supported.")
+    }
     has_cash_long <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_LONG_",]))
     has_cash_short <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_SHORT_",]))
 

@@ -4,22 +4,22 @@
 \alias{trade_weights}
 \title{Trade a Set of Daily Weights}
 \usage{
-trade_weights(df_prices, df_weights, rebal_ith = 1,
-  rebal_group_by = "date")
+trade_weights(df_prices, df_weights, rebal_group_by = "date",
+  rebal_ith = 1)
 }
 \arguments{
 \item{df_prices}{a data.frame containing the columns: symbol, date, price}
 
 \item{df_weights}{a data.frame containing the columns: symbol, date, w}
 
+\item{rebal_group_by}{Optional Character indicating by group to apply to ith_date.
+Acceptable values are: date, week, month, qtr.  Default is date
+which performs a daily rebalance.}
+
 \item{rebal_ith}{Optional Integer to determine which observation of each by group to return.
 For Example ith_date = 2, week will return the second day of
 each week.  Also, ith_date = 99, month will return last day of
 each month.  Default is 1.}
-
-\item{rebal_group_by}{Optional Character indicating by group to apply to ith_date.
-Acceptable values are: date, week, month, qtr.  Default is date
-which performs a daily rebalance.}
 }
 \description{
 Takes a set of daily prices and daily weights
