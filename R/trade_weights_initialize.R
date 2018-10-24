@@ -21,6 +21,10 @@ trade_weights_initialize <- function(df_prices, df_weights,
     if (use_cash_short) { symbols <- c(symbols, "_CASH_SHORT_") }
     symbols <- sort(unique(symbols))
     dates <- sort(unique(df_prices[df_prices$symbol == 'XLB', 'date']))
+    if (!(length(dates) > 0)) {
+        stop(paste("At least one row for sybmol XLB must exist within df_price.",
+                   "XLB df_price dates are used as dates to trade (I know strange...)."))
+    }
     dates <- dates[dates >= min(df_weights$date)]
     min_date <- dates[1]
 
