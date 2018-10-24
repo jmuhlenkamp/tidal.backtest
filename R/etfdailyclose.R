@@ -4,7 +4,6 @@
 #' through 2018-10-22.  Data is in format required for trade_weights().
 #'
 #' @docType data
-#' @LazyData true
 #'
 #' @source Raw .csv files were downloaded from Yahoo Finances and then
 #' converted to R data.frame via the code shown in the examples.
