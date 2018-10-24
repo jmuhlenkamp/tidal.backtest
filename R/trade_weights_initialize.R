@@ -95,3 +95,15 @@ trade_weights_initialize <- function(df_prices, df_weights,
 
     return(list(dates=dates, dt=dt, dt_fund=dt_fund))
 }
+#'
+#' Unexported Subfunction(s) of trade_weights
+#'
+#' Returns a date vector indicating which dates trade_weights_execute()
+#' should performance a rebalance.
+#'
+#' @param dates a vector of dates
+#' @import data.table
+#'
+trade_weights_initialize_rebaldates <- function(dates) {
+    dates
+}

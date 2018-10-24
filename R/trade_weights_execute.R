@@ -28,6 +28,7 @@ trade_weights_update_nav <- function(dt_fund, dt, idate) {
 #'
 trade_weights_execute <- function(list_data) {
     dates <- list_data$dates
+    rebaldates <- list_data$rebaldates
     dt <- list_data$dt
     dt_fund <- list_data$dt_fund
 
@@ -42,7 +43,7 @@ trade_weights_execute <- function(list_data) {
         trade_weights_update_nav(dt_fund, dt, idate)
         fv <- dt_fund[date == idate, nav_value]
 
-        rebal <- TRUE # Currently only daily rebal is supported
+        rebal <- idate %in% rebaldates
         if (rebal) {
             # Update non-cash trade_shares
             dt[is_cash==FALSE & date == idate, target_dollars:=w * fv]
