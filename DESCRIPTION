@@ -1,6 +1,6 @@
 Package: tidal.backtest
 Title: Function(s) for Fund Level Backtesting
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: 
     person(given = "Jason",
            family = "Muhlenkamp",
