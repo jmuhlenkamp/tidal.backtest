@@ -4,10 +4,18 @@
 \alias{trade_weights_initialize_rebaldates}
 \title{Unexported Subfunction(s) of trade_weights}
 \usage{
-trade_weights_initialize_rebaldates(dates)
+trade_weights_initialize_rebaldates(dates, ith_date, by_group)
 }
 \arguments{
-\item{dates}{a vector of dates}
+\item{dates}{A vector of dates}
+
+\item{ith_date}{Integer to determine which observation of each by group to return.
+For Example ith_date = 2, week will return the second day of
+each week.  Also, ith_date = 99, month will return last day of
+each month.}
+
+\item{by_group}{Character indicating by group to apply to ith_date.
+Acceptable values are: date, week, month, qtr.}
 }
 \description{
 Returns a date vector indicating which dates trade_weights_execute()

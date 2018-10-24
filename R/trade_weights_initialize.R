@@ -101,9 +101,31 @@ trade_weights_initialize <- function(df_prices, df_weights,
 #' Returns a date vector indicating which dates trade_weights_execute()
 #' should performance a rebalance.
 #'
-#' @param dates a vector of dates
+#' @param dates A vector of dates
+#' @param ith_date Integer to determine which observation of each by group to return.
+#'                 For Example ith_date = 2, week will return the second day of
+#'                 each week.  Also, ith_date = 99, month will return last day of
+#'                 each month.
+#' @param by_group Character indicating by group to apply to ith_date.
+#'                        Acceptable values are: date, week, month, qtr.
 #' @import data.table
 #'
-trade_weights_initialize_rebaldates <- function(dates) {
-    dates
+trade_weights_initialize_rebaldates <- function(dates, ith_date, by_group) {
+    dates <- sort(dates)
+    dt <- data.table(date = dates,
+                     year = year(dates),
+                     quarter = quarter(dates),
+                     month = month(dates),
+                     week = week(dates))
+    if (by_group == "date") {
+        dt[, .SD[min(c(ith_date,.N))], by=.(date)]$date
+    } else if (by_group == "week") {
+        dt[, .SD[min(c(ith_date,.N))], by=.(year, week)]$date
+    } else if (by_group == "month") {
+        dt[, .SD[min(c(ith_date,.N))], by=.(year, month)]$date
+    } else if (by_group == "qtr") {
+        dt[, .SD[min(c(ith_date,.N))], by=.(year, quarter)]$date
+    } else {
+        stop("by_group must be one of the following: date, week, month, qtr")
+    }
 }

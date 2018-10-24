@@ -37,7 +37,7 @@ trade_weights <- function(df_prices, df_weights) {
     list_initialized <- trade_weights_initialize(
         df_prices, df_weights, has_cash_long, has_cash_short)
     list_initialized$rebaldates <-
-        trade_weights_initialize_rebaldates(list_initialized$dates)
+        trade_weights_initialize_rebaldates(list_initialized$dates, 1, 'date')
 
     list_executed <- trade_weights_execute(list_initialized)
 
