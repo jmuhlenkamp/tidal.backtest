@@ -1,4 +1,4 @@
 library(testthat)
-library(tidal.backtest)
+library(tidalbacktest)
 
-test_check("tidal.backtest")
+test_check("tidalbacktest")
