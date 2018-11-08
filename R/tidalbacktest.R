@@ -2,6 +2,12 @@
 #' @name tidalbacktest
 #' @title Package for Backtesting
 #' @description Contains \code{\link{backtest}} function. \cr\cr
+#'
+#' @import data.table
+#' @import tibble
+#'
+#' @export backtest
+#'
 "_PACKAGE"
 utils::globalVariables(c(".",
                          "is_cash",

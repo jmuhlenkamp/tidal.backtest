@@ -4,7 +4,7 @@
 #'
 #' @param df a data.frame to validate
 #' @param columns a character vector of columns that must be present in the data.frame
-
+#'
 validate_df_columns <- function(df, columns) {
     chr_df <- deparse(substitute(df))
     chr_columns <- paste(columns, collapse = ", ")

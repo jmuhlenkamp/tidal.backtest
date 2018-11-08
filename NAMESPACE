@@ -2,3 +2,4 @@
 
 export(backtest)
 import(data.table)
+import(tibble)

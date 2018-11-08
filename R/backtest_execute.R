@@ -6,7 +6,6 @@
 #' @param dt_fund data.table of fund-level information
 #' @param dt data.table of holdings-level information
 #' @param idate date to update
-#' @import data.table
 #'
 backtest_update_nav <- function(dt_fund, dt, idate) {
     dt_fund[date == idate, `:=`(
@@ -24,7 +23,6 @@ backtest_update_nav <- function(dt_fund, dt, idate) {
 #' and executes the daily trades.
 #'
 #' @param list_data list returned from backtest_initialize()
-#' @import data.table
 #'
 backtest_execute <- function(list_data) {
     dates <- list_data$dates

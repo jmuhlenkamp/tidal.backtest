@@ -13,8 +13,6 @@
 #' @param prices a data.frame containing the columns: symbol, date, price.
 #'   Default is tidalprices::dailyclose.
 #'
-#' @import data.table
-#' @export
 #' @examples
 #' \dontrun{
 #' library(quantmod)

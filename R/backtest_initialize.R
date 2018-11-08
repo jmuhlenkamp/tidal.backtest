@@ -7,7 +7,6 @@
 #' @param df_weights a data.frame containing the columns: symbol, date, w
 #' @param use_cash_long if TRUE use _CASH_LONG_ price within df_prices, else use 1 for all dates
 #' @param use_cash_short if TRUE use _CASH_SHORT_ price within df_prices, else use 1 for all dates
-#' @import data.table
 #'
 backtest_initialize <- function(df_prices, df_weights,
                                      use_cash_long, use_cash_short) {
@@ -110,7 +109,6 @@ backtest_initialize <- function(df_prices, df_weights,
 #'                 each month.
 #' @param by_group Character indicating by group to apply to ith_date.
 #'                        Acceptable values are: date, week, month, qtr.
-#' @import data.table
 #'
 backtest_initialize_rebaldates <- function(dates, ith_date, by_group) {
     dates <- sort(dates)
