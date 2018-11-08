@@ -2,8 +2,7 @@
 #'
 #' Backtest function that returns a daily NAV dataset
 #'
-#' @param df_prices a data.frame containing the columns: symbol, date, price
-#' @param df_weights a data.frame containing the columns: symbol, date, w
+#' @param data a data.frame containing the columns: symbol, date, w
 #' @param rebal_group_by Optional Character indicating by group to apply to ith_date.
 #'                       Acceptable values are: date, week, month, qtr.  Default is date
 #'                       which performs a daily rebalance.
@@ -11,6 +10,8 @@
 #'                 For Example ith_date = 2, week will return the second day of
 #'                 each week.  Also, ith_date = 99, month will return last day of
 #'                 each month.  Default is 1.
+#' @param prices a data.frame containing the columns: symbol, date, price.
+#'   Default is tidalprices::dailyclose.
 #'
 #' @import data.table
 #' @export
@@ -37,7 +38,12 @@
 #' df_nav <- backtest(df_close, df_weights)
 #' }
 
-backtest <- function(df_prices, df_weights, rebal_group_by = "date", rebal_ith = 1) {
+backtest <- function(
+    data,
+    rebal_group_by = "date",
+    rebal_ith = 1,
+    prices = tidalprice::dailyclose)
+{
     rebal_ith_date <- 1
     if (rebal_ith_date != 1) {
         stop("Only rebal_ith_date = 1 is currently supported.")
@@ -62,7 +68,7 @@ backtest <- function(df_prices, df_weights, rebal_group_by = "date", rebal_ith =
     message("Trade Costs            : None")
 
     list_initialized <- backtest_initialize(
-        df_prices, df_weights, has_cash_long, has_cash_short)
+        prices, data, has_cash_long, has_cash_short)
     list_initialized$rebaldates <-
         backtest_initialize_rebaldates(list_initialized$dates, rebal_ith, rebal_group_by)
 

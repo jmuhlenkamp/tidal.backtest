@@ -4,12 +4,11 @@
 \alias{backtest}
 \title{Backtest a Set of Daily Weights}
 \usage{
-backtest(df_prices, df_weights, rebal_group_by = "date", rebal_ith = 1)
+backtest(data, rebal_group_by = "date", rebal_ith = 1,
+  prices = tidalprice::dailyclose)
 }
 \arguments{
-\item{df_prices}{a data.frame containing the columns: symbol, date, price}
-
-\item{df_weights}{a data.frame containing the columns: symbol, date, w}
+\item{data}{a data.frame containing the columns: symbol, date, w}
 
 \item{rebal_group_by}{Optional Character indicating by group to apply to ith_date.
 Acceptable values are: date, week, month, qtr.  Default is date
@@ -19,6 +18,9 @@ which performs a daily rebalance.}
 For Example ith_date = 2, week will return the second day of
 each week.  Also, ith_date = 99, month will return last day of
 each month.  Default is 1.}
+
+\item{prices}{a data.frame containing the columns: symbol, date, price.
+Default is tidalprices::dailyclose.}
 }
 \description{
 Backtest function that returns a daily NAV dataset
