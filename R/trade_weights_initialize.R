@@ -11,6 +11,8 @@
 #'
 trade_weights_initialize <- function(df_prices, df_weights,
                                      use_cash_long, use_cash_short) {
+    df_prices <- as.data.frame(df_prices)
+    df_weights <- as.data.frame(df_weights)
     validate_df_columns(df_prices, c("symbol", "date", "price"))
     validate_df_columns(df_weights, c("symbol", "date", "w"))
 
