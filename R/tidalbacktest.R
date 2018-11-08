@@ -1,9 +1,7 @@
-#' tidalbacktest: Function(s) for Fund Level Backtesting
-#'
-#' Generate daily NAV backtest results quickly and easily.
-#'
 #' @docType package
 #' @name tidalbacktest
+#' @title Package for Backtesting
+#' @description Contains \code{\link{backtest}} function. \cr\cr
 "_PACKAGE"
 utils::globalVariables(c(".",
                          "is_cash",

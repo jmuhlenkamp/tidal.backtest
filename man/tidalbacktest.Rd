@@ -4,9 +4,9 @@
 \name{tidalbacktest}
 \alias{tidalbacktest}
 \alias{tidalbacktest-package}
-\title{tidalbacktest: Function(s) for Fund Level Backtesting}
+\title{Package for Backtesting}
 \description{
-Generate daily NAV backtest results quickly and easily.
+Contains \code{\link{backtest}} function. \cr\cr
 }
 \author{
 \strong{Maintainer}: Jason Muhlenkamp \email{jason.muhlenkamp@gmail.com}
