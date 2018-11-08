@@ -26,7 +26,7 @@ backtest_initialize <- function(df_prices, df_weights,
         stop(paste("At least one row for sybmol XLB must exist within df_price.",
                    "XLB df_price dates are used as dates to trade (I know strange...)."))
     }
-    dates <- dates[dates >= min(df_weights$date)]
+    dates <- dates[dates >= min(df_weights$date) & dates <= max(df_weights$date)]
     min_date <- dates[1]
 
     # Convert input df to dt
