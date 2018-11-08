@@ -5,6 +5,7 @@
 #'
 #' @import data.table
 #' @import tibble
+#' @import tidalprice
 #'
 #' @export backtest
 #'

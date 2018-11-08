@@ -3,3 +3,4 @@
 export(backtest)
 import(data.table)
 import(tibble)
+import(tidalprice)
