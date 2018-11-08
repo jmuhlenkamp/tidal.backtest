@@ -4,11 +4,13 @@
 \alias{backtest}
 \title{Backtest a Set of Daily Weights}
 \usage{
-backtest(data, rebal_group_by = "date", rebal_ith = 1,
-  prices = tidalprice::dailyclose)
+backtest(data, name = ".backtest", rebal_group_by = "date",
+  rebal_ith = 1, prices = tidalprice::dailyclose)
 }
 \arguments{
 \item{data}{a data.frame containing the columns: symbol, date, w}
+
+\item{name}{a string name for the backtest results.}
 
 \item{rebal_group_by}{Optional Character indicating by group to apply to ith_date.
 Acceptable values are: date, week, month, qtr.  Default is date

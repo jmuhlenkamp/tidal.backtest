@@ -3,6 +3,7 @@
 #' Backtest function that returns a daily NAV dataset
 #'
 #' @param data a data.frame containing the columns: symbol, date, w
+#' @param name a string name for the backtest results.
 #' @param rebal_group_by Optional Character indicating by group to apply to ith_date.
 #'                       Acceptable values are: date, week, month, qtr.  Default is date
 #'                       which performs a daily rebalance.
@@ -26,6 +27,7 @@
 #'
 backtest <- function(
     data,
+    name = ".backtest",
     rebal_group_by = "date",
     rebal_ith = 1,
     prices = tidalprice::dailyclose)
@@ -54,11 +56,11 @@ backtest <- function(
     message("Trade Costs            : None")
 
     list_initialized <- backtest_initialize(
-        prices, data, has_cash_long, has_cash_short)
+        prices, data, has_cash_long, has_cash_short, name)
     list_initialized$rebaldates <-
         backtest_initialize_rebaldates(list_initialized$dates, rebal_ith, rebal_group_by)
 
     list_executed <- backtest_execute(list_initialized)
 
-    return(list_executed$df_fund)
+    return(list_executed)
 }

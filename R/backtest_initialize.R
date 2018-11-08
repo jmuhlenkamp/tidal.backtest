@@ -7,9 +7,11 @@
 #' @param df_weights a data.frame containing the columns: symbol, date, w
 #' @param use_cash_long if TRUE use _CASH_LONG_ price within df_prices, else use 1 for all dates
 #' @param use_cash_short if TRUE use _CASH_SHORT_ price within df_prices, else use 1 for all dates
+#' @param name a string name for the backtest results
 #'
 backtest_initialize <- function(df_prices, df_weights,
-                                     use_cash_long, use_cash_short) {
+                                     use_cash_long, use_cash_short,
+                                name) {
     df_prices <- as.data.frame(df_prices)
     df_weights <- as.data.frame(df_weights)
     validate_df_columns(df_prices, c("symbol", "date", "price"))
@@ -94,7 +96,7 @@ backtest_initialize <- function(df_prices, df_weights,
     )]
     setkey(dt_fund, date)
 
-    return(list(dates=dates, dt=dt, dt_fund=dt_fund))
+    return(list(dates=dates, dt=dt, dt_fund=dt_fund, name=name))
 }
 #'
 #' Unexported Subfunction(s) of backtest

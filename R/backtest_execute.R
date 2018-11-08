@@ -80,7 +80,8 @@ backtest_execute <- function(list_data) {
 
     # Prepare data for returning to user
     dt_fund <- dt_fund[,.(date, nav_close)]
-    setnames(dt_fund, old='nav_close', new='nav')
-    df_fund <- as.data.frame(dt_fund)
-    return(list(df_fund=df_fund))
+    setnames(dt_fund, old='nav_close', new='price')
+    df_fund <- tibble::as_tibble(dt_fund)
+    df_fund$symbol <- '.backtest'
+    return(list(dailynav=df_fund, details=tibble::as_tibble(dt)))
 }

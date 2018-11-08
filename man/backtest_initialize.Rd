@@ -4,7 +4,8 @@
 \alias{backtest_initialize}
 \title{Unexported Subfunction(s) of backtest}
 \usage{
-backtest_initialize(df_prices, df_weights, use_cash_long, use_cash_short)
+backtest_initialize(df_prices, df_weights, use_cash_long, use_cash_short,
+  name)
 }
 \arguments{
 \item{df_prices}{a data.frame containing the columns: symbol, date, price}
@@ -14,6 +15,8 @@ backtest_initialize(df_prices, df_weights, use_cash_long, use_cash_short)
 \item{use_cash_long}{if TRUE use _CASH_LONG_ price within df_prices, else use 1 for all dates}
 
 \item{use_cash_short}{if TRUE use _CASH_SHORT_ price within df_prices, else use 1 for all dates}
+
+\item{name}{a string name for the backtest results}
 }
 \description{
 Takes a set of daily prices and daily weights
