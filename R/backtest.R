@@ -46,8 +46,8 @@ backtest <- function(
     if (rebal_ith_date != 1) {
         stop("Only rebal_ith_date = 1 is currently supported.")
     }
-    has_cash_long <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_LONG_",]))
-    has_cash_short <- as.logical(nrow(df_prices[df_prices$symbol == "_CASH_SHORT_",]))
+    has_cash_long <- as.logical(nrow(prices[prices$symbol == "_CASH_LONG_",]))
+    has_cash_short <- as.logical(nrow(prices[prices$symbol == "_CASH_SHORT_",]))
     if (has_cash_long) {
         msg_cash_long <- "Broker charged rates within price data"
     } else {

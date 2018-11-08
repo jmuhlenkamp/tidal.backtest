@@ -9,7 +9,7 @@ etfs_5days <- dailycloseetf[dailycloseetf$date <= as.Date('2017-10-30'),]
 etfs_5days_cash <- dplyr::bind_rows(dailyclosecash, etfs_5days)
 
 daily_long100 <- dplyr::pull(dplyr::filter(
-    backtest(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/3)),
+    backtest(prices = etfs_5days_cash, data = dplyr::mutate(dailycloseetf, w = 1/3)),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Daily Rebalance & 100% Long Exposure",
@@ -17,7 +17,7 @@ test_that("Final Nav: Daily Rebalance & 100% Long Exposure",
                         0, tolerance = 0.0001, scale = 1))
 
 daily_long050 <- dplyr::pull(dplyr::filter(
-    backtest(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/6)),
+    backtest(dplyr::mutate(dailycloseetf, w = 1/6), prices = etfs_5days_cash),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Daily Rebalance & 50% Long Exposure",
@@ -25,7 +25,7 @@ test_that("Final Nav: Daily Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 daily_long150 <- dplyr::pull(dplyr::filter(
-    backtest(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/2)),
+    backtest(prices = etfs_5days_cash, data = dplyr::mutate(dailycloseetf, w = 1/2)),
     dplyr::row_number() == dplyr::n()),
     nav)
 
@@ -36,7 +36,7 @@ etfs_7days_cash <- dplyr::bind_rows(dailyclosecash, etfs_7days)
 df_price <- etfs_7days_cash
 
 week_long100 <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/3), 'week'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/3), 'week'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Weekly Rebalance & 100% Long Exposure",
@@ -44,7 +44,7 @@ test_that("Final Nav: Weekly Rebalance & 100% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 week_long050 <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'week'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/6), 'week'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Weekly Rebalance & 50% Long Exposure",
@@ -52,7 +52,7 @@ test_that("Final Nav: Weekly Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 week_long150 <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'week'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/2), 'week'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Weekly Rebalance & 150% Long Exposure",
@@ -66,7 +66,7 @@ etfs_9days_cash <- dplyr::bind_rows(dailyclosecash, etfs_9days)
 df_price <- etfs_9days_cash
 
 df_test <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/3), 'month'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/3), 'month'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Monthly Rebalance & 100% Long Exposure",
@@ -74,7 +74,7 @@ test_that("Final Nav: Monthly Rebalance & 100% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 df_test <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'month'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/6), 'month'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Month Rebalance & 50% Long Exposure",
@@ -82,7 +82,7 @@ test_that("Final Nav: Month Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 df_test <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'month'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/2), 'month'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Monthly Rebalance & 150% Long Exposure",
@@ -96,7 +96,7 @@ etfs_50days_cash <- dplyr::bind_rows(dailyclosecash, etfs_50days)
 df_price <- etfs_50days_cash
 
 df_test <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'qtr'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/6), 'qtr'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Quarterly Rebalance & 50% Long Exposure",
@@ -104,7 +104,7 @@ test_that("Final Nav: Quarterly Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 df_test <- dplyr::pull(dplyr::filter(
-    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'qtr'),
+    backtest(prices = df_price, data = dplyr::mutate(dailycloseetf, w = 1/2), 'qtr'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Quarterly Rebalance & 150% Long Exposure",
