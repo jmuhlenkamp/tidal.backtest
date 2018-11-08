@@ -14,16 +14,16 @@
 #'   Default is tidalprices::dailyclose.
 #'
 #' @examples
-#' \dontrun{
 #' # Create a data.frame of weights
-#' df_weights <- dplyr::filter(dailyclose, symbol %in% c('XLB', 'XLE', 'XLF'), date <= as.Date('1998-12-31'))
+#' df_weights <- dplyr::filter(tidalprice::dailyclose,
+#'                             symbol %in% c('XLB', 'XLE', 'XLF'),
+#'                             date <= as.Date('1998-12-31'))
 #' df_weights$w <- 0.32
 #' df_weights$price <- NULL
 #'
 #' # Trade the weights
 #' df_nav <- backtest(df_weights)
-#' }
-
+#'
 backtest <- function(
     data,
     rebal_group_by = "date",
