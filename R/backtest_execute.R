@@ -1,4 +1,4 @@
-#' Unexported Subfunction(s) of trade_weights
+#' Unexported Subfunction(s) of backtest
 #'
 #' Computes nav values for a given date share shares and prices
 #' at various times (value, trade, close) within \code{dt}.
@@ -8,7 +8,7 @@
 #' @param idate date to update
 #' @import data.table
 #'
-trade_weights_update_nav <- function(dt_fund, dt, idate) {
+backtest_update_nav <- function(dt_fund, dt, idate) {
     dt_fund[date == idate, `:=`(
         nav_value=sum(dt[date == idate, .(tmp=shares_value * price_value)][,tmp]),
         nav_trade=sum(dt[date == idate, .(tmp=shares_trade * price_trade)][,tmp]),
@@ -18,15 +18,15 @@ trade_weights_update_nav <- function(dt_fund, dt, idate) {
     #print(dt[date == idate,])
 }
 #'
-#' Unexported Subfunction(s) of trade_weights
+#' Unexported Subfunction(s) of backtest
 #'
-#' Takes the list returned from trade_weights_initialize()
+#' Takes the list returned from backtest_initialize()
 #' and executes the daily trades.
 #'
-#' @param list_data list returned from trade_weights_initialize()
+#' @param list_data list returned from backtest_initialize()
 #' @import data.table
 #'
-trade_weights_execute <- function(list_data) {
+backtest_execute <- function(list_data) {
     dates <- list_data$dates
     rebaldates <- list_data$rebaldates
     dt <- list_data$dt
@@ -40,7 +40,7 @@ trade_weights_execute <- function(list_data) {
             dt[date == idate,shares_value:=lag_shares_close]
         }
 
-        trade_weights_update_nav(dt_fund, dt, idate)
+        backtest_update_nav(dt_fund, dt, idate)
         fv <- dt_fund[date == idate, nav_value]
 
         rebal <- idate %in% rebaldates
@@ -70,7 +70,7 @@ trade_weights_execute <- function(list_data) {
         # Trade shares
         dt[date == idate, shares_trade:=shares_value + trade_shares]
         dt[date == idate, shares_close:=shares_trade]
-        trade_weights_update_nav(dt_fund, dt, idate)
+        backtest_update_nav(dt_fund, dt, idate)
 
         lag_idate <- idate
         first <- FALSE

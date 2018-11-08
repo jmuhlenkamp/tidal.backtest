@@ -1,7 +1,6 @@
-#' Trade a Set of Daily Weights
+#' Backtest a Set of Daily Weights
 #'
-#' Takes a set of daily prices and daily weights
-#' and returns a daily NAV
+#' Backtest function that returns a daily NAV dataset
 #'
 #' @param df_prices a data.frame containing the columns: symbol, date, price
 #' @param df_weights a data.frame containing the columns: symbol, date, w
@@ -35,10 +34,10 @@
 #' df_weights$price <- NULL
 #'
 #' # Trade the weights
-#' df_nav <- trade_weights(df_close, df_weights)
+#' df_nav <- backtest(df_close, df_weights)
 #' }
 
-trade_weights <- function(df_prices, df_weights, rebal_group_by = "date", rebal_ith = 1) {
+backtest <- function(df_prices, df_weights, rebal_group_by = "date", rebal_ith = 1) {
     rebal_ith_date <- 1
     if (rebal_ith_date != 1) {
         stop("Only rebal_ith_date = 1 is currently supported.")
@@ -62,12 +61,12 @@ trade_weights <- function(df_prices, df_weights, rebal_group_by = "date", rebal_
     message("Rebalance              : Day ", rebal_ith, " of each ", rebal_group_by)
     message("Trade Costs            : None")
 
-    list_initialized <- trade_weights_initialize(
+    list_initialized <- backtest_initialize(
         df_prices, df_weights, has_cash_long, has_cash_short)
     list_initialized$rebaldates <-
-        trade_weights_initialize_rebaldates(list_initialized$dates, rebal_ith, rebal_group_by)
+        backtest_initialize_rebaldates(list_initialized$dates, rebal_ith, rebal_group_by)
 
-    list_executed <- trade_weights_execute(list_initialized)
+    list_executed <- backtest_execute(list_initialized)
 
     return(list_executed$df_fund)
 }

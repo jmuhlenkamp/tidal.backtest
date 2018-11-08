@@ -1,15 +1,15 @@
-context("trade_weights() basics")
-test_that("trade_weights() handles errors correctly", {
-    expect_error(trade_weights(1:26, LETTERS))
+context("backtest() basics")
+test_that("backtest() handles errors correctly", {
+    expect_error(backtest(1:26, LETTERS))
 })
 
 
-context("trade_weights() final nav within 1 bp excel calculation: daily rebalance")
+context("backtest() final nav within 1 bp excel calculation: daily rebalance")
 etfs_5days <- dailycloseetf[dailycloseetf$date <= as.Date('2017-10-30'),]
 etfs_5days_cash <- dplyr::bind_rows(dailyclosecash, etfs_5days)
 
 daily_long100 <- dplyr::pull(dplyr::filter(
-    trade_weights(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/3)),
+    backtest(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/3)),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Daily Rebalance & 100% Long Exposure",
@@ -17,7 +17,7 @@ test_that("Final Nav: Daily Rebalance & 100% Long Exposure",
                         0, tolerance = 0.0001, scale = 1))
 
 daily_long050 <- dplyr::pull(dplyr::filter(
-    trade_weights(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/6)),
+    backtest(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/6)),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Daily Rebalance & 50% Long Exposure",
@@ -25,18 +25,18 @@ test_that("Final Nav: Daily Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 daily_long150 <- dplyr::pull(dplyr::filter(
-    trade_weights(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/2)),
+    backtest(etfs_5days_cash, dplyr::mutate(dailycloseetf, w = 1/2)),
     dplyr::row_number() == dplyr::n()),
     nav)
 
 
-context("trade_weights() final nav within 1 bp excel calculation: weekly rebalance")
+context("backtest() final nav within 1 bp excel calculation: weekly rebalance")
 etfs_7days <- dailycloseetf[dailycloseetf$date <= as.Date('2017-10-31'),]
 etfs_7days_cash <- dplyr::bind_rows(dailyclosecash, etfs_7days)
 df_price <- etfs_7days_cash
 
 week_long100 <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/3), 'week'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/3), 'week'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Weekly Rebalance & 100% Long Exposure",
@@ -44,7 +44,7 @@ test_that("Final Nav: Weekly Rebalance & 100% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 week_long050 <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'week'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'week'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Weekly Rebalance & 50% Long Exposure",
@@ -52,7 +52,7 @@ test_that("Final Nav: Weekly Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 week_long150 <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'week'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'week'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Weekly Rebalance & 150% Long Exposure",
@@ -60,13 +60,13 @@ test_that("Final Nav: Weekly Rebalance & 150% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 
-context("trade_weights() final nav within 1 bp excel calculation: monthly rebalance")
+context("backtest() final nav within 1 bp excel calculation: monthly rebalance")
 etfs_9days <- dailycloseetf[dailycloseetf$date <= as.Date('2017-11-02'),]
 etfs_9days_cash <- dplyr::bind_rows(dailyclosecash, etfs_9days)
 df_price <- etfs_9days_cash
 
 df_test <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/3), 'month'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/3), 'month'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Monthly Rebalance & 100% Long Exposure",
@@ -74,7 +74,7 @@ test_that("Final Nav: Monthly Rebalance & 100% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 df_test <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'month'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'month'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Month Rebalance & 50% Long Exposure",
@@ -82,7 +82,7 @@ test_that("Final Nav: Month Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 df_test <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'month'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'month'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Monthly Rebalance & 150% Long Exposure",
@@ -90,13 +90,13 @@ test_that("Final Nav: Monthly Rebalance & 150% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 
-context("trade_weights() final nav within 1 bp excel calculation: qtr rebalance")
+context("backtest() final nav within 1 bp excel calculation: qtr rebalance")
 etfs_50days <- dailycloseetf[dailycloseetf$date <= as.Date('2018-01-03'),]
 etfs_50days_cash <- dplyr::bind_rows(dailyclosecash, etfs_50days)
 df_price <- etfs_50days_cash
 
 df_test <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'qtr'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/6), 'qtr'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Quarterly Rebalance & 50% Long Exposure",
@@ -104,7 +104,7 @@ test_that("Final Nav: Quarterly Rebalance & 50% Long Exposure",
                        0, tolerance = 0.0001, scale = 1))
 
 df_test <- dplyr::pull(dplyr::filter(
-    trade_weights(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'qtr'),
+    backtest(df_price, dplyr::mutate(dailycloseetf, w = 1/2), 'qtr'),
     dplyr::row_number() == dplyr::n()),
     nav)
 test_that("Final Nav: Quarterly Rebalance & 150% Long Exposure",

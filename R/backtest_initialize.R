@@ -1,4 +1,4 @@
-#' Unexported Subfunction(s) of trade_weights
+#' Unexported Subfunction(s) of backtest
 #'
 #' Takes a set of daily prices and daily weights
 #' and returns a list of initialized data ready to be traded.
@@ -9,7 +9,7 @@
 #' @param use_cash_short if TRUE use _CASH_SHORT_ price within df_prices, else use 1 for all dates
 #' @import data.table
 #'
-trade_weights_initialize <- function(df_prices, df_weights,
+backtest_initialize <- function(df_prices, df_weights,
                                      use_cash_long, use_cash_short) {
     df_prices <- as.data.frame(df_prices)
     df_weights <- as.data.frame(df_weights)
@@ -98,9 +98,9 @@ trade_weights_initialize <- function(df_prices, df_weights,
     return(list(dates=dates, dt=dt, dt_fund=dt_fund))
 }
 #'
-#' Unexported Subfunction(s) of trade_weights
+#' Unexported Subfunction(s) of backtest
 #'
-#' Returns a date vector indicating which dates trade_weights_execute()
+#' Returns a date vector indicating which dates backtest_execute()
 #' should performance a rebalance.
 #'
 #' @param dates A vector of dates
@@ -112,7 +112,7 @@ trade_weights_initialize <- function(df_prices, df_weights,
 #'                        Acceptable values are: date, week, month, qtr.
 #' @import data.table
 #'
-trade_weights_initialize_rebaldates <- function(dates, ith_date, by_group) {
+backtest_initialize_rebaldates <- function(dates, ith_date, by_group) {
     dates <- sort(dates)
     dt <- data.table(date = dates,
                      year = year(dates),
