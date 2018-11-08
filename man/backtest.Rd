@@ -27,24 +27,12 @@ Backtest function that returns a daily NAV dataset
 }
 \examples{
 \dontrun{
-library(quantmod)
-
-# Create a data.frame of adjusted close prices
-getSymbolsData <- new.env()
-getSymbols(c('XLB', 'XLE', 'XLF'),
-           env = getSymbolsData,
-           from = as.Date("2018-09-03"),
-           to = as.Date("2018-09-29"))
-df_close <- dplyr::bind_rows(
-    lapply(getSymbolsData, function(x)
-        data.frame(date = index(x), price = unname(Ad(x)))), .id = 'symbol')
-
 # Create a data.frame of weights
-df_weights <- df_close
+df_weights <- dplyr::filter(dailyclose, symbol \%in\% c('XLB', 'XLE', 'XLF'), date <= as.Date('1998-12-31'))
 df_weights$w <- 0.32
 df_weights$price <- NULL
 
 # Trade the weights
-df_nav <- backtest(df_close, df_weights)
+df_nav <- backtest(df_weights)
 }
 }
