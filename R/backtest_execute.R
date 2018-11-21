@@ -33,8 +33,10 @@ backtest_execute <- function(list_data) {
     first <- TRUE
     for (idate in sort(dates)) {
         # Carry forward the shares_close from lag_idate to shares_value of idate
+        # If lag_shares_close is NA - it will fill with 0
+        # i.e. a new symbol comes into the mix
         if (!first) {
-            dt[,lag_shares_close:=c(NA, shares_close[-.N]), by=c("symbol")]
+            dt[,lag_shares_close:=c(0, shares_close[-.N]), by=c("symbol")]
             dt[date == idate,shares_value:=lag_shares_close]
         }
 
