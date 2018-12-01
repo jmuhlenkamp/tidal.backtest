@@ -60,7 +60,8 @@ backtest <- function(
     list_initialized$rebaldates <-
         backtest_initialize_rebaldates(list_initialized$dates, rebal_ith, rebal_group_by)
 
-    list_executed <- backtest_execute(list_initialized)
+    list_executed <- c(backtest_execute(list_initialized),
+                       list_initialized["rebaldates"])
 
     return(list_executed)
 }
